@@ -16,7 +16,7 @@ import java.util.Map;
 public class GeneratePdfReportTest
 {
     @Test
-    public void shouldGeneratePdf() throws JRException, IOException
+    public void shouldGeneratePdfReport1() throws JRException, IOException
     {
         Files.deleteIfExists(Paths.get("report1.pdf"));
 
@@ -25,5 +25,17 @@ public class GeneratePdfReportTest
         final Map<String, Object> params = new HashMap<String, Object>();
         final JasperPrint print = JasperFillManager.fillReport(report, params, new JREmptyDataSource());
         JasperExportManager.exportReportToPdfFile(print, "report1.pdf");
+    }
+
+    @Test
+    public void shouldGeneratePdfReport2() throws JRException, IOException
+    {
+        Files.deleteIfExists(Paths.get("report2.pdf"));
+
+        final JasperDesign design = JRXmlLoader.load(new File("src/main/resources/report2.jrxml"));
+        final JasperReport report = JasperCompileManager.compileReport(design);
+        final Map<String, Object> params = new HashMap<String, Object>();
+        final JasperPrint print = JasperFillManager.fillReport(report, params, new JREmptyDataSource());
+        JasperExportManager.exportReportToPdfFile(print, "report2.pdf");
     }
 }
